@@ -19,7 +19,7 @@ export default function ThemePicker() {
     >
       <select
         name="theme"
-        className="block w-full rounded-md border border-gray-300 bg-gray-50 p-2 text-sm dark:bg-gray-800"
+        className="block w-full rounded-md border border-gray-300 bg-gray-50 p-2 text-sm dark:border-gray-800 dark:bg-gray-800"
         defaultValue="Light"
       >
         <option value="light">{t("theme.light")}</option>
