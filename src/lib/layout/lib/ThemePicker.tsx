@@ -1,6 +1,8 @@
 import { FormEvent } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function ThemePicker() {
+  const { t } = useTranslation();
   return (
     <form
       className="w-20"
@@ -20,8 +22,8 @@ export default function ThemePicker() {
         className="block w-full rounded-md border border-gray-300 bg-gray-50 p-2 text-sm dark:bg-gray-800"
         defaultValue="Light"
       >
-        <option value="light">Light</option>
-        <option value="dark">Dark</option>
+        <option value="light">{t("theme.light")}</option>
+        <option value="dark">{t("theme.dark")}</option>
       </select>
     </form>
   );
