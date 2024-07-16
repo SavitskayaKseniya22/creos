@@ -68,3 +68,16 @@ export interface ParsedIssueArrayType {
   times: number[];
   median: number;
 }
+
+export interface ProjectType {
+  id: number;
+  name: string;
+  key: string;
+}
+
+export interface DesignerResponseType {
+  count: number;
+  next: null | string;
+  previous: null | string;
+  results: DesignerType[];
+}
