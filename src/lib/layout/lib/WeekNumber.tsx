@@ -1,9 +1,4 @@
-function getWeek() {
-  const currentDate = new Date();
-  const startOfYear = new Date(currentDate.getFullYear(), 0, 1);
-  const dayDifference = (currentDate.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24);
-  return Math.ceil((dayDifference * 24 - 11) / 24 / 7);
-}
+import { getWeek } from "../../../utils";
 
 export default function WeekNumber() {
   return (

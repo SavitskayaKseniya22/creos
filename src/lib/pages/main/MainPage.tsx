@@ -1,3 +1,9 @@
+import Comments from "./lib/Comments";
+
 export default function MainPage() {
-  return <>MainPage</>;
+  return (
+    <div>
+      <Comments></Comments>
+    </div>
+  );
 }

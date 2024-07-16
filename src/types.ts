@@ -14,3 +14,11 @@ export interface CommentType {
   date_created: string;
   message: string;
 }
+
+export interface DateDetailedType {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+  ms: number;
+}
