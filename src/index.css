@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+a.active {
+  @apply rounded-lg border border-gray-300;
+}
