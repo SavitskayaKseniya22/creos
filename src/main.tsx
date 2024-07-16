@@ -6,6 +6,8 @@ import Designers from "./lib/pages/designers/Designers";
 import Tasks from "./lib/pages/tasks/Tasks";
 import ErrorPage from "./lib/pages/Error";
 import Layout from "./lib/layout/Layout";
+import { Provider } from "react-redux";
+import { store } from "./store/store.js";
 import "./i18n.js";
 import "./index.css";
 
@@ -36,6 +38,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>,
 );
