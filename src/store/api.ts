@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { CommentType } from "../types";
+import { CommentType, IssueDetailedType, ParsedIssueArrayType } from "../types";
+import { parseIssueArray } from "../utils";
 
 export const creosApi = createApi({
   reducerPath: "creosApi",
@@ -15,7 +16,14 @@ export const creosApi = createApi({
     getComments: builder.query<CommentType[], void>({
       query: () => `comment/`,
     }),
+    getDoneIssues: builder.query<ParsedIssueArrayType[], void>({
+      query: () => ({
+        url: `issue/`,
+        params: { status: "Done" },
+      }),
+      transformResponse: (response: IssueDetailedType[]) => parseIssueArray(response),
+    }),
   }),
 });
 
-export const { useGetCommentsQuery } = creosApi;
+export const { useGetCommentsQuery, useGetDoneIssuesQuery } = creosApi;

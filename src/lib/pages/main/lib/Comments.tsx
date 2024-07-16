@@ -7,13 +7,9 @@ function Comment({ data }: { data: CommentType }) {
   return (
     <li className="flex flex-col gap-2 rounded-lg border-2 border-indigo-50 p-2 sm:p-4">
       <div className="flex w-full gap-8 self-start rounded-lg">
-        <img
-          src={data.designer.thumbnails.avatar_webp_2x}
-          alt="Avatar"
-          className="h-16 w-16 rounded-lg sm:h-20 sm:w-20"
-        />
+        <img src={data.designer.avatar} alt="Avatar" className="h-16 w-16 rounded-lg sm:h-20 sm:w-20" />
         <div className="flex flex-col items-start justify-between gap-2 sm:gap-4">
-          <h3 className="font-bold">{data.designer.username}</h3>
+          <h3 className="text-lg font-bold">{data.designer.username}</h3>
           <p className="rounded-lg bg-red-50 p-1 dark:bg-gray-900 sm:p-2">{data.issue}</p>
         </div>
         <p className="ml-auto self-start text-center">
@@ -54,7 +50,7 @@ export default function Comments() {
 
   return (
     <div className="flex h-full w-full flex-col gap-4">
-      <h2 className="text-lg font-bold">Last comments</h2>
+      <h2 className="text-xl font-bold">Last comments</h2>
       {data && (
         <ul className="flex flex-col gap-4">
           {data
