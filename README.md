@@ -1,30 +1,63 @@
-# React + TypeScript + Vite
+# [Creos app](https://courageous-longma-53287f.netlify.app/)
+Test assignment
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Features
+- [x] Mobile layout
+- [x] Internationalization with i18next
+- [x] Theming with Tailwind
+- [x] Charts with Mui on Tasks page
+- [x] Current week number in header
+- [x] Last ten comments on Main Page
+- [x] Top-10 designers on Main Page sorted by amount of finished projects
+- [x] Designers page with sorting, ordering and pagination
+- [x] Deploy to Netlify
+- [x] ALL DONE
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
+- React
+- Vite
+- Typescript
+- Redux Toolkit
+- Tailwind
+- Eslint
+- Prettier
+- React-router
+- Mui charts
+- i18next
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
-    project: ["./tsconfig.json", "./tsconfig.node.json"],
-    tsconfigRootDir: __dirname,
-  },
-};
+## How to use
+1. Clone the repo
+``` bash
+git clone https://github.com/SavitskayaKseniya22/creos.git
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+2. Change directory
+``` bash
+cd creos
+```
+
+2. Install dependencies
+``` bash
+npm install
+```
+
+3. Start the dev server
+``` bash
+npm run dev
+```
+
+### Screenshots: 
+
+![Screenshot 2024-07-17 at 22-13-31 Creos](https://github.com/user-attachments/assets/3707a5bb-e938-429f-a7aa-9b0d6238526d)
+![Screenshot 2024-07-17 at 22-13-47 Creos](https://github.com/user-attachments/assets/d7c0fd23-cbf8-471c-b734-a06a96322e7e)
+![Screenshot 2024-07-17 at 22-13-57 Creos](https://github.com/user-attachments/assets/c1f2231b-1738-4241-95e1-d84e15fff862)
+
+
+
+
+
+
+
+
