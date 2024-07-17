@@ -6,6 +6,7 @@ import WeekPicker from "./WeekPicker";
 import { getWeekNumber } from "../../../../utils";
 import { useTranslation } from "react-i18next";
 import Spinner from "../../../layout/lib/Spinner";
+import ErrorView from "../../../layout/lib/ErrorView";
 
 export default function ChartBar() {
   const [weekAmount, setWeekAmount] = useState(8);
@@ -41,12 +42,9 @@ export default function ChartBar() {
     }
   }, [data, weekAmount]);
 
-  if (error) {
-    throw error;
-  }
-
   return (
-    <div className="flex max-w-full grow items-center justify-center overflow-x-auto p-2">
+    <div className="flex max-w-full grow flex-col items-center justify-center gap-2 p-2">
+      {error && <ErrorView></ErrorView>}
       {isLoading && <Spinner></Spinner>}
       {chartData && (
         <>
@@ -55,31 +53,35 @@ export default function ChartBar() {
               setWeekAmount(+value);
             }}
           ></WeekPicker>
-          <BarChart
-            dataset={chartData}
-            xAxis={[
-              { id: "week", scaleType: "band", dataKey: "weekNumber" },
-              {
-                id: "month",
-                scaleType: "band",
-                dataKey: "month",
-                valueFormatter: (value) => t(`month.${value}`),
-              },
-            ]}
-            topAxis={"month"}
-            series={[
-              { dataKey: "income", label: t("money.income") },
-              { dataKey: "outcome", label: t("money.outcome") },
-              { dataKey: "profit", label: t("money.profit") },
-            ]}
-            width={800}
-            height={350}
-            slotProps={{
-              legend: {
-                padding: -5,
-              },
-            }}
-          />
+
+          <div className="w-full overflow-x-auto">
+            <BarChart
+              dataset={chartData}
+              xAxis={[
+                { id: "week", scaleType: "band", dataKey: "weekNumber" },
+                {
+                  id: "month",
+                  scaleType: "band",
+                  dataKey: "month",
+                  valueFormatter: (value) => t(`month.${value}`),
+                },
+              ]}
+              topAxis={"month"}
+              series={[
+                { dataKey: "income", label: t("money.income") },
+                { dataKey: "outcome", label: t("money.outcome") },
+                { dataKey: "profit", label: t("money.profit") },
+              ]}
+              width={800}
+              height={350}
+              margin={{
+                left: 60,
+                right: 0,
+                top: 80,
+                bottom: 30,
+              }}
+            />
+          </div>
         </>
       )}
     </div>

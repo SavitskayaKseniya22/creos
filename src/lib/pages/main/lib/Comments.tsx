@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useGetCommentsQuery } from "../../../../store/api";
 import { CommentType } from "../../../../types";
 import { createDateString, getTimePast } from "../../../../utils";
+import ErrorView from "../../../layout/lib/ErrorView";
 
 function Comment({ data }: { data: CommentType }) {
   const res = getTimePast(data.date_created);
@@ -45,13 +46,17 @@ export default function Comments() {
   const { data, error, isLoading } = useGetCommentsQuery();
   const { t } = useTranslation();
 
-  if (error) {
-    throw error;
-  }
-
   return (
     <div className="flex h-full w-full flex-col gap-4">
       <h2 className="text-xl font-bold">{t("titles.comments")}</h2>
+      {error && <ErrorView></ErrorView>}
+      {isLoading && (
+        <ul className="flex flex-col gap-4">
+          {new Array(10).fill(0).map((_, i) => {
+            return <CommentPlaceholder key={i}></CommentPlaceholder>;
+          })}
+        </ul>
+      )}
       {data && (
         <ul className="flex flex-col gap-4">
           {data
@@ -60,13 +65,6 @@ export default function Comments() {
             .map((comment) => {
               return <Comment key={comment.id} data={comment}></Comment>;
             })}
-        </ul>
-      )}
-      {isLoading && (
-        <ul className="flex flex-col gap-4">
-          {new Array(10).fill(0).map((_, i) => {
-            return <CommentPlaceholder key={i}></CommentPlaceholder>;
-          })}
         </ul>
       )}
     </div>

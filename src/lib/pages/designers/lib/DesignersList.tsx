@@ -1,9 +1,9 @@
 import { useTranslation } from "react-i18next";
-import { DesignerType } from "../../../../types";
+import { DesignerType, PartType } from "../../../../types";
+import { getPartForStatus } from "../../../../utils";
 
 function DesignerPreview({ data }: { data: DesignerType }) {
-  const progressProjects = data.issues.filter((item) => item.status === "In Progress").length;
-  const doneProjects = data.issues.filter((item) => item.status === "Done").length;
+  const { progress, done } = getPartForStatus(data.issues, PartType.VALUE);
   const { t } = useTranslation();
 
   return (
@@ -14,12 +14,12 @@ function DesignerPreview({ data }: { data: DesignerType }) {
 
       <div className="flex w-full items-center gap-2 rounded-lg bg-green-50 p-2 dark:bg-gray-900">
         <h4 className="font-bold">
-          {t("status.inprogress")} - {progressProjects}
+          {t("status.inprogress")} - {progress}
         </h4>
       </div>
       <div className="flex w-full flex-col rounded-lg bg-red-50 p-2 dark:bg-gray-800">
         <h4 className="font-bold">
-          {t("status.done")} - {doneProjects}
+          {t("status.done")} - {done}
         </h4>
       </div>
     </li>
@@ -29,9 +29,9 @@ function DesignerPreview({ data }: { data: DesignerType }) {
 export default function DesignerList({ data }: { data: DesignerType[] }) {
   return (
     <ul className="flex w-full flex-wrap items-center justify-center gap-2">
-      {data.map((designer, i) => (
-        <DesignerPreview data={designer} key={designer.username + i}></DesignerPreview>
-      ))}
+      {data.map((designer, i) => {
+        return <DesignerPreview data={designer} key={designer.username + i}></DesignerPreview>;
+      })}
     </ul>
   );
 }

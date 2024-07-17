@@ -3,7 +3,9 @@ import {
   DateDetailedType,
   IssueDetailedExtendedType,
   IssueDetailedType,
-  ParsedIssueArrayType,
+  IssueShortType,
+  DesignerStatType,
+  PartType,
   StatusPartType,
 } from "./types";
 
@@ -12,13 +14,6 @@ export function getWeekNumber(date: string | Date): number {
   const startOfYear = new Date(currentDate.getFullYear(), 0, 1);
   const dayDifference = (currentDate.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24);
   return Math.ceil((dayDifference * 24 - 11) / 24 / 7);
-}
-
-function getDateDifference(date: string): number {
-  const startOfYear = new Date(date);
-  const currentDate = new Date();
-
-  return currentDate.getTime() - startOfYear.getTime();
 }
 
 export function convertMilliseconds(ms: number): DateDetailedType {
@@ -43,13 +38,14 @@ export function convertMilliseconds(ms: number): DateDetailedType {
   return { days, hours, minutes, seconds, ms: result };
 }
 
+function getDateDifference(start: string, end?: string): number {
+  const currentDate = end ? new Date(end) : new Date();
+  return currentDate.getTime() - new Date(start).getTime();
+}
+
 export function getTimePast(date: string): DateDetailedType {
   const difference = getDateDifference(date);
   return convertMilliseconds(difference);
-}
-
-function getTimeSpent(start: string, end: string) {
-  return new Date(end).getTime() - new Date(start).getTime();
 }
 
 function calculateMedian(times: number[]) {
@@ -65,11 +61,11 @@ function calculateMedian(times: number[]) {
   return (times[middle - 1] + times[middle]) / 2;
 }
 
-export function parseIssueArray(array: IssueDetailedType[]): ParsedIssueArrayType[] {
+export function convertToDesignerStat(array: IssueDetailedType[]): DesignerStatType[] {
   const designers: { [key: string]: IssueDetailedExtendedType[] } = {};
 
   array.forEach((item) => {
-    const time_spent = getTimeSpent(item.date_started_by_designer, item.date_finished_by_designer);
+    const time_spent = getDateDifference(item.date_started_by_designer, item.date_finished_by_designer);
 
     if (designers[item.designer] === undefined) {
       designers[item.designer] = [{ ...item, time_spent }];
@@ -110,14 +106,25 @@ export function createDateString(date: DateDetailedType, t: TFunction<"translati
   return `${d}${((d && h) || (d && m)) && ", "}${h}${h && m && ", "}${m}`;
 }
 
-export function getPersentageForStatus(data: IssueDetailedType[]): StatusPartType {
+export function getPartForStatus(data: IssueDetailedType[] | IssueShortType[], type: PartType): StatusPartType {
   const allTasks = data.length;
-
-  const getP = (value: number) => (value / allTasks) * 100;
-
   const doneTasks = data.filter((item) => item.status === "Done").length;
   const newTasks = data.filter((item) => item.status === "New").length;
   const progressTasks = data.filter((item) => item.status === "In Progress").length;
 
-  return { done: getP(doneTasks), new: getP(newTasks), progress: getP(progressTasks) };
+  if (type === PartType.PERCENT) {
+    const getP = (value: number) => (value / allTasks) * 100;
+    return { done: getP(doneTasks), new: getP(newTasks), progress: getP(progressTasks) };
+  } else {
+    return { done: doneTasks, new: newTasks, progress: progressTasks };
+  }
+}
+
+export function generateId(length = 8) {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let id = "";
+  for (let i = 0; i < length; i++) {
+    id += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return id;
 }

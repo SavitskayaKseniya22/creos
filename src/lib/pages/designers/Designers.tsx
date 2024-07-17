@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useGetDesignersQuery } from "../../../store/api";
 import SortControl from "./lib/SortControl";
 import Projects from "./lib/Projects";
@@ -6,6 +6,7 @@ import StatusControl from "./lib/StatusControl";
 import DesignerList from "./lib/DesignersList";
 import { useTranslation } from "react-i18next";
 import Spinner from "../../layout/lib/Spinner";
+import ErrorView from "../../layout/lib/ErrorView";
 
 export default function Designers() {
   const [pageNumber, setPageNumber] = useState(1);
@@ -22,21 +23,10 @@ export default function Designers() {
     key: project || undefined,
   });
 
-  useEffect(() => {
-    if (data) {
-      console.log(data);
-    }
-  }, [data]);
-
-  if (error) {
-    throw error;
-  }
-
   return (
     <div className="flex w-full flex-col gap-8">
       <h2 className="text-xl font-bold">{t("titles.designers")}</h2>
-
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 self-center">
         <button
           type="button"
           className="rounded-md bg-indigo-50 px-4 py-2 disabled:opacity-50 dark:bg-gray-800"
@@ -91,8 +81,8 @@ export default function Designers() {
         ></StatusControl>
       </div>
 
+      {error && <ErrorView></ErrorView>}
       {isLoading && <Spinner></Spinner>}
-
       {data && data.results.length > 0 && <DesignerList data={data.results}></DesignerList>}
       {data && !data.results.length && <p className="m-auto self-center">{t("emptysearch")}</p>}
     </div>

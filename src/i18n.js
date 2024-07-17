@@ -62,6 +62,10 @@ const resources = {
         11: "December",
       },
       emptysearch: "No designers found. Change settings to repeate the search",
+      error: {
+        text: "Sorry, an unexpected error has occurred. Please, reload the page",
+        404: "Sorry, page is not found",
+      },
     },
   },
   ru: {
@@ -123,7 +127,11 @@ const resources = {
         10: "Ноябрь",
         11: "Декабрь",
       },
-      emptysearch: "Дизайнеры не найдены. Измените настройки, чтобы повторить поиск.",
+      emptysearch: "Дизайнеры не найдены. Измените настройки, чтобы повторить поиск",
+      error: {
+        text: "Произошла ошибка. Перезагрузите страницу",
+        404: "Простите, страница не найдена",
+      },
     },
   },
 };

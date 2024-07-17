@@ -61,9 +61,7 @@ export type IssueDetailedType = {
 
 export type IssueDetailedExtendedType = IssueDetailedType & { time_spent: number };
 
-export type IssueCRMExtendedType = IssueDetailedType & { weekNumber: number; outcome: number; profit: number };
-
-export interface ParsedIssueArrayType {
+export interface DesignerStatType {
   name: string;
   tasks: IssueDetailedExtendedType[];
   count: number;
@@ -97,3 +95,8 @@ export type WeekData = {
   income: number;
   month: number;
 };
+
+export enum PartType {
+  "PERCENT",
+  "VALUE",
+}

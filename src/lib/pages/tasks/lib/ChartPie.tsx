@@ -1,10 +1,11 @@
 import { PieChart } from "@mui/x-charts/PieChart";
 import { useState, useEffect } from "react";
 import { useGetIssuesQuery } from "../../../../store/api";
-import { StatusPartType } from "../../../../types";
-import { getPersentageForStatus } from "../../../../utils";
+import { PartType, StatusPartType } from "../../../../types";
+import { getPartForStatus } from "../../../../utils";
 import { useTranslation } from "react-i18next";
 import Spinner from "../../../layout/lib/Spinner";
+import ErrorView from "../../../layout/lib/ErrorView";
 
 export default function ChartPie() {
   const { data, error, isLoading } = useGetIssuesQuery();
@@ -13,16 +14,13 @@ export default function ChartPie() {
 
   useEffect(() => {
     if (data) {
-      setPieData(getPersentageForStatus(data));
+      setPieData(getPartForStatus(data, PartType.PERCENT));
     }
   }, [data]);
 
-  if (error) {
-    throw error;
-  }
-
   return (
     <div className="flex max-w-full grow items-center justify-center overflow-x-auto p-2">
+      {error && <ErrorView></ErrorView>}
       {isLoading && <Spinner></Spinner>}
       {pieData && (
         <PieChart

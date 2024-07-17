@@ -1,14 +1,11 @@
 import { FormEvent } from "react";
 import { useGetProjectsQuery } from "../../../../store/api";
 import { useTranslation } from "react-i18next";
+import ErrorView from "../../../layout/lib/ErrorView";
 
 export default function Projects({ onChange }: { onChange: (value: string) => void }) {
   const { data, error, isLoading } = useGetProjectsQuery();
   const { t } = useTranslation();
-
-  if (error) {
-    throw error;
-  }
 
   return (
     <form
@@ -22,6 +19,7 @@ export default function Projects({ onChange }: { onChange: (value: string) => vo
       }}
     >
       <ul className="flex flex-wrap items-center justify-center gap-2">
+        {error && <ErrorView></ErrorView>}
         {isLoading &&
           new Array(5).fill(0).map((_, i) => {
             return (

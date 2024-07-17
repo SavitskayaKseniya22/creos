@@ -1,13 +1,10 @@
+import { useTranslation } from "react-i18next";
 import { useRouteError } from "react-router-dom";
 
 export default function ErrorPage() {
   const error = useRouteError();
+  const { t } = useTranslation();
   console.error(error);
 
-  return (
-    <div>
-      <h1>Oops!</h1>
-      <p>Sorry, an unexpected error has occurred.</p>
-    </div>
-  );
+  return <p className="m-auto">{t("error.text")}</p>;
 }

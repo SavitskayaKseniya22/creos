@@ -1,9 +1,10 @@
 import { useTranslation } from "react-i18next";
-import { useGetDoneIssuesQuery } from "../../../../store/api";
-import { ParsedIssueArrayType } from "../../../../types";
+import { useGetDesignersStatsQuery } from "../../../../store/api";
+import { DesignerStatType } from "../../../../types";
 import { convertMilliseconds, createDateString } from "../../../../utils";
+import ErrorView from "../../../layout/lib/ErrorView";
 
-function DesignerPreview({ data }: { data: ParsedIssueArrayType }) {
+function DesignerPreview({ data }: { data: DesignerStatType }) {
   const res = convertMilliseconds(data.median);
   const { t } = useTranslation();
 
@@ -40,15 +41,13 @@ function DesignerPreviewPlaceholder() {
 }
 
 export default function TopDesigners() {
-  const { data, error, isLoading } = useGetDoneIssuesQuery();
+  const { data, error, isLoading } = useGetDesignersStatsQuery();
   const { t } = useTranslation();
 
-  if (error) {
-    throw error;
-  }
   return (
     <div className="flex h-full w-full flex-col gap-4">
       <h2 className="text-xl font-bold">{t("titles.designers")}</h2>
+      {error && <ErrorView></ErrorView>}
       {isLoading && (
         <ul className="flex flex-wrap items-center justify-center gap-2">
           {new Array(10).fill(0).map((_, i) => {

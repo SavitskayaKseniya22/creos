@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { CommentType, DesignerResponseType, IssueDetailedType, ParsedIssueArrayType, ProjectType } from "../types";
-import { parseIssueArray } from "../utils";
+import { CommentType, DesignerResponseType, IssueDetailedType, DesignerStatType, ProjectType } from "../types";
+import { convertToDesignerStat } from "../utils";
 
 export const creosApi = createApi({
   reducerPath: "creosApi",
@@ -30,19 +30,18 @@ export const creosApi = createApi({
       { page?: number; ordering?: string; status?: string; key?: string }
     >({
       query: (arg) => {
-        console.log(arg);
         return {
           url: "designer/",
           params: { ...arg },
         };
       },
     }),
-    getDoneIssues: builder.query<ParsedIssueArrayType[], void>({
+    getDesignersStats: builder.query<DesignerStatType[], void>({
       query: () => ({
         url: `issue/`,
         params: { status: "Done" },
       }),
-      transformResponse: (response: IssueDetailedType[]) => parseIssueArray(response),
+      transformResponse: (response: IssueDetailedType[]) => convertToDesignerStat(response),
     }),
 
     getAllDoneIssues: builder.query<IssueDetailedType[], void>({
@@ -56,9 +55,11 @@ export const creosApi = createApi({
 
 export const {
   useGetCommentsQuery,
-  useGetDoneIssuesQuery,
+  useGetDesignersStatsQuery,
   useGetProjectsQuery,
   useGetDesignersQuery,
   useGetIssuesQuery,
   useGetAllDoneIssuesQuery,
 } = creosApi;
+
+// ошибка это проблема RTK. Баг описан в их Issues на GitHub

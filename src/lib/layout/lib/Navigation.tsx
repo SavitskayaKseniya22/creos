@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 export default function Navigation() {
   const { t } = useTranslation();
   return (
-    <ul className="m-auto flex flex-col gap-2 text-center sm:flex-row sm:gap-8">
+    <ul className="flex flex-col justify-center gap-2 text-center sm:flex-row sm:gap-8">
       <li>
         <NavLink
           to="/"
