@@ -5,7 +5,7 @@ export default function ThemePicker() {
   const { t } = useTranslation();
   return (
     <form
-      className="w-16"
+      className="w-20"
       onChange={(e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const form = e.currentTarget;

@@ -1,9 +1,11 @@
+import { useTranslation } from "react-i18next";
 import { useGetDoneIssuesQuery } from "../../../../store/api";
 import { ParsedIssueArrayType } from "../../../../types";
 import { convertMilliseconds, createDateString } from "../../../../utils";
 
 function DesignerPreview({ data }: { data: ParsedIssueArrayType }) {
   const res = convertMilliseconds(data.median);
+  const { t } = useTranslation();
 
   return (
     <li className="flex flex-col items-center gap-2 rounded-lg border-2 border-indigo-50 p-2">
@@ -13,14 +15,14 @@ function DesignerPreview({ data }: { data: ParsedIssueArrayType }) {
         className="h-16 w-16 rounded-lg sm:h-20 sm:w-20"
       />
       <h3 className="text-lg font-bold">{data.name}</h3>
-
       <div className="flex w-full items-center gap-2 rounded-lg bg-red-50 p-2 dark:bg-gray-900">
-        <h4 className="font-bold">Done: </h4>
-        <span className="font-bold">{data.count}</span>
+        <h4 className="font-bold">
+          {t("status.done")} - {data.count}
+        </h4>
       </div>
-      <div className="flex w-full flex-col rounded-lg bg-gray-100 p-2 dark:bg-gray-800">
-        <h4 className="font-bold">Median time:</h4>
-        <span className="self-center">{createDateString(res)}</span>
+      <div className="flex w-full flex-col items-center rounded-lg bg-gray-100 p-2 dark:bg-gray-800">
+        <h4 className="font-bold">{t("date.time")}</h4>
+        <span>{createDateString(res, t)}</span>
       </div>
     </li>
   );
@@ -39,13 +41,14 @@ function DesignerPreviewPlaceholder() {
 
 export default function TopDesigners() {
   const { data, error, isLoading } = useGetDoneIssuesQuery();
+  const { t } = useTranslation();
 
   if (error) {
     throw error;
   }
   return (
     <div className="flex h-full w-full flex-col gap-4">
-      <h2 className="text-xl font-bold">Top designers</h2>
+      <h2 className="text-xl font-bold">{t("titles.designers")}</h2>
       {isLoading && (
         <ul className="flex flex-wrap items-center justify-center gap-2">
           {new Array(10).fill(0).map((_, i) => {

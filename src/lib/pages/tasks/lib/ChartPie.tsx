@@ -3,10 +3,12 @@ import { useState, useEffect } from "react";
 import { useGetIssuesQuery } from "../../../../store/api";
 import { StatusPartType } from "../../../../types";
 import { getPersentageForStatus } from "../../../../utils";
+import { useTranslation } from "react-i18next";
 
 export default function ChartPie() {
   const { data, error } = useGetIssuesQuery();
   const [pieData, setPieData] = useState<null | StatusPartType>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (data) {
@@ -19,14 +21,14 @@ export default function ChartPie() {
   }
 
   return (
-    <div className="max-w-full overflow-x-scroll p-2">
+    <div className="max-w-full overflow-x-auto p-2">
       <PieChart
         series={[
           {
             data: [
-              { id: 0, value: pieData ? pieData.new : 0, label: "Размещено" },
-              { id: 1, value: pieData ? pieData.done : 0, label: "Закрыто" },
-              { id: 2, value: pieData ? pieData.progress : 0, label: "Взято в работу" },
+              { id: 0, value: pieData ? pieData.new : 0, label: t("status.new") },
+              { id: 1, value: pieData ? pieData.done : 0, label: t("status.done") },
+              { id: 2, value: pieData ? pieData.progress : 0, label: t("status.inprogress") },
             ],
             innerRadius: 32,
           },

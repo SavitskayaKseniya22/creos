@@ -1,6 +1,8 @@
+import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 
 export default function Navigation() {
+  const { t } = useTranslation();
   return (
     <ul className="m-auto flex flex-col gap-2 text-center sm:flex-row sm:gap-8">
       <li>
@@ -8,7 +10,7 @@ export default function Navigation() {
           to="/"
           className={`${({ isActive, isPending }: { isActive: boolean; isPending: boolean }) => (isPending ? "pending" : isActive ? "active" : "")} px-2 py-1 sm:px-4 sm:py-2`}
         >
-          Home
+          {t("titles.home")}
         </NavLink>
       </li>
       <li>
@@ -16,7 +18,7 @@ export default function Navigation() {
           to="/designers"
           className={`${({ isActive, isPending }: { isActive: boolean; isPending: boolean }) => (isPending ? "pending" : isActive ? "active" : "")} px-2 py-1 sm:px-4 sm:py-2`}
         >
-          Designers
+          {t("titles.designers")}
         </NavLink>
       </li>
       <li>
@@ -24,7 +26,7 @@ export default function Navigation() {
           to="/tasks"
           className={`${({ isActive, isPending }: { isActive: boolean; isPending: boolean }) => (isPending ? "pending" : isActive ? "active" : "")} px-2 py-1 sm:px-4 sm:py-2`}
         >
-          Tasks
+          {t("titles.tasks")}
         </NavLink>
       </li>
     </ul>

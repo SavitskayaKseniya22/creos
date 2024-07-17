@@ -4,6 +4,7 @@ import SortControl from "./lib/SortControl";
 import Projects from "./lib/Projects";
 import StatusControl from "./lib/StatusControl";
 import DesignerList from "./lib/DesignersList";
+import { useTranslation } from "react-i18next";
 
 export default function Designers() {
   const [pageNumber, setPageNumber] = useState(1);
@@ -11,6 +12,7 @@ export default function Designers() {
   const [sortValue, setSortValue] = useState<string>("username");
   const [project, setProject] = useState<string | null>(null);
   const [status, setStatus] = useState<string | null>(null);
+  const { t } = useTranslation();
 
   const { data, error, isLoading } = useGetDesignersQuery({
     page: pageNumber,
@@ -30,8 +32,8 @@ export default function Designers() {
   }
 
   return (
-    <div className="flex flex-col gap-8">
-      <h2 className="text-xl font-bold">Designers</h2>
+    <div className="flex w-full flex-col gap-8">
+      <h2 className="text-xl font-bold">{t("titles.designers")}</h2>
       <div className="flex items-center gap-4">
         <button
           type="button"
@@ -41,7 +43,7 @@ export default function Designers() {
             setPageNumber((a) => a - 1);
           }}
         >
-          Prev page
+          {t("page.prev")}
         </button>
         {pageNumber}
         <button
@@ -52,7 +54,7 @@ export default function Designers() {
             setPageNumber((a) => a + 1);
           }}
         >
-          Next page
+          {t("page.next")}
         </button>
       </div>
 
@@ -60,7 +62,6 @@ export default function Designers() {
         <SortControl
           onChange={(value) => {
             setSortValue(value);
-
             setPageNumber(1);
           }}
         ></SortControl>
@@ -88,7 +89,8 @@ export default function Designers() {
         ></StatusControl>
       </div>
 
-      {data && <DesignerList data={data.results}></DesignerList>}
+      {data && data.results.length > 0 && <DesignerList data={data.results}></DesignerList>}
+      {data && !data.results.length && <p className="m-auto self-center">{t("emptysearch")}</p>}
     </div>
   );
 }

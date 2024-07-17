@@ -1,3 +1,4 @@
+import { TFunction } from "i18next";
 import {
   DateDetailedType,
   IssueDetailedExtendedType,
@@ -100,11 +101,11 @@ export function parseIssueArray(array: IssueDetailedType[]): ParsedIssueArrayTyp
     });
 }
 
-export function createDateString(date: DateDetailedType) {
+export function createDateString(date: DateDetailedType, t: TFunction<"translation", undefined>) {
   const { days, hours, minutes } = date;
-  const d = days ? `${days}d` : "";
-  const h = hours ? `${hours}h` : "";
-  const m = minutes ? `${minutes}m ` : "";
+  const d = days ? `${days}${t("date.d")}` : "";
+  const h = hours ? `${hours}${t("date.h")}` : "";
+  const m = minutes ? `${minutes}${t("date.m")} ` : "";
 
   return `${d}${((d && h) || (d && m)) && ", "}${h}${h && m && ", "}${m}`;
 }
@@ -119,21 +120,4 @@ export function getPersentageForStatus(data: IssueDetailedType[]): StatusPartTyp
   const progressTasks = data.filter((item) => item.status === "In Progress").length;
 
   return { done: getP(doneTasks), new: getP(newTasks), progress: getP(progressTasks) };
-}
-
-export function getMonthValue(value: number) {
-  return [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ][value];
 }

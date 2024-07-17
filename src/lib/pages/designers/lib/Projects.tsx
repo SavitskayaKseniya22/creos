@@ -1,8 +1,10 @@
 import { FormEvent } from "react";
 import { useGetProjectsQuery } from "../../../../store/api";
+import { useTranslation } from "react-i18next";
 
 export default function Projects({ onChange }: { onChange: (value: string) => void }) {
   const { data, error, isLoading } = useGetProjectsQuery();
+  const { t } = useTranslation();
 
   if (error) {
     throw error;
@@ -46,7 +48,7 @@ export default function Projects({ onChange }: { onChange: (value: string) => vo
                 htmlFor="none"
                 className="block cursor-pointer rounded-md bg-indigo-50 px-4 py-2 has-[:checked]:bg-indigo-200 dark:bg-gray-800 dark:has-[:checked]:bg-indigo-900"
               >
-                none
+                {t("status.none")}
                 <input type="radio" value="none" name="project" id="none" className="hidden" defaultChecked />
               </label>
             </li>

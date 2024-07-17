@@ -1,9 +1,12 @@
+import { useTranslation } from "react-i18next";
 import { useGetCommentsQuery } from "../../../../store/api";
 import { CommentType } from "../../../../types";
-import { getTimePast } from "../../../../utils";
+import { createDateString, getTimePast } from "../../../../utils";
 
 function Comment({ data }: { data: CommentType }) {
-  const { days, hours, minutes, seconds } = getTimePast(data.date_created);
+  const res = getTimePast(data.date_created);
+  const { t } = useTranslation();
+
   return (
     <li className="flex flex-col gap-2 rounded-lg border-2 border-indigo-50 p-2 sm:p-4">
       <div className="flex w-full gap-8 self-start rounded-lg">
@@ -13,10 +16,7 @@ function Comment({ data }: { data: CommentType }) {
           <p className="rounded-lg bg-red-50 p-1 dark:bg-gray-900 sm:p-2">{data.issue}</p>
         </div>
         <p className="ml-auto self-start text-center">
-          {(days && `${days} days ago`) ||
-            (hours && `${hours} hours ago`) ||
-            (minutes && `${minutes} minutes ago`) ||
-            (seconds && `${seconds} seconds ago`)}
+          {createDateString(res, t)} {t("date.ago")}
         </p>
       </div>
 
@@ -43,6 +43,7 @@ function CommentPlaceholder() {
 
 export default function Comments() {
   const { data, error, isLoading } = useGetCommentsQuery();
+  const { t } = useTranslation();
 
   if (error) {
     throw error;
@@ -50,7 +51,7 @@ export default function Comments() {
 
   return (
     <div className="flex h-full w-full flex-col gap-4">
-      <h2 className="text-xl font-bold">Last comments</h2>
+      <h2 className="text-xl font-bold">{t("titles.comments")}</h2>
       {data && (
         <ul className="flex flex-col gap-4">
           {data

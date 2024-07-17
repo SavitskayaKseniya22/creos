@@ -95,5 +95,5 @@ export type WeekData = {
   outcome: number;
   profit: number;
   income: number;
-  month: string;
+  month: number;
 };

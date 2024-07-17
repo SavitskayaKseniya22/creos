@@ -3,12 +3,14 @@ import { useState, useEffect } from "react";
 import { useGetAllDoneIssuesQuery } from "../../../../store/api";
 import { WeekData } from "../../../../types";
 import WeekPicker from "./WeekPicker";
-import { getMonthValue, getWeekNumber } from "../../../../utils";
+import { getWeekNumber } from "../../../../utils";
+import { useTranslation } from "react-i18next";
 
 export default function ChartBar() {
   const [weekAmount, setWeekAmount] = useState(8);
   const { data, error } = useGetAllDoneIssuesQuery();
   const [chartData, setChartData] = useState<null | WeekData[]>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (data) {
@@ -25,7 +27,7 @@ export default function ChartBar() {
             profit,
             income,
             weekNumber,
-            month: getMonthValue(new Date(item.date_finished).getMonth()),
+            month: new Date(item.date_finished).getMonth(),
           };
         } else {
           weeksData[weekNumber].outcome += outcome;
@@ -44,7 +46,7 @@ export default function ChartBar() {
 
   return (
     chartData && (
-      <div className="max-w-full overflow-x-scroll p-2">
+      <div className="max-w-full overflow-x-auto p-2">
         <WeekPicker
           onChange={(value) => {
             setWeekAmount(+value);
@@ -54,13 +56,18 @@ export default function ChartBar() {
           dataset={chartData}
           xAxis={[
             { id: "week", scaleType: "band", dataKey: "weekNumber" },
-            { id: "month", scaleType: "band", dataKey: "month" },
+            {
+              id: "month",
+              scaleType: "band",
+              dataKey: "month",
+              valueFormatter: (value) => t(`month.${value}`),
+            },
           ]}
           topAxis={"month"}
           series={[
-            { dataKey: "income", label: "Income" },
-            { dataKey: "outcome", label: "Outcome" },
-            { dataKey: "profit", label: "Profit" },
+            { dataKey: "income", label: t("money.income") },
+            { dataKey: "outcome", label: t("money.outcome") },
+            { dataKey: "profit", label: t("money.profit") },
           ]}
           width={800}
           height={350}
