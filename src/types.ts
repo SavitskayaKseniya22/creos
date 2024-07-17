@@ -81,3 +81,9 @@ export interface DesignerResponseType {
   previous: null | string;
   results: DesignerType[];
 }
+
+export interface StatusPartType {
+  done: number;
+  new: number;
+  progress: number;
+}

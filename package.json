@@ -11,6 +11,10 @@
     "format": "npx prettier . --write"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/material": "^5.16.4",
+    "@mui/x-charts": "^7.10.0",
     "@reduxjs/toolkit": "^2.2.6",
     "i18next": "^23.12.1",
     "react": "^18.3.1",

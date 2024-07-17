@@ -102,3 +102,14 @@ export function createDateString(date: DateDetailedType) {
 
   return `${d}${((d && h) || (d && m)) && ", "}${h}${h && m && ", "}${m}`;
 }
+export function getPersentageForStatus(data: IssueDetailedType[]): StatusPartType {
+  const allTasks = data.length;
+
+  const getP = (value: number) => (value / allTasks) * 100;
+
+  const doneTasks = data.filter((item) => item.status === "Done").length;
+  const newTasks = data.filter((item) => item.status === "New").length;
+  const progressTasks = data.filter((item) => item.status === "In Progress").length;
+
+  return { done: getP(doneTasks), new: getP(newTasks), progress: getP(progressTasks) };
+}

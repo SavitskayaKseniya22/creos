@@ -19,6 +19,12 @@ export const creosApi = createApi({
     getProjects: builder.query<ProjectType[], void>({
       query: () => `project/`,
     }),
+getIssues: builder.query<IssueDetailedType[], void>({
+      query: () => ({
+        url: `issue/`,
+      }),
+    }),
+
     getDesigners: builder.query<
       DesignerResponseType,
       { page?: number; ordering?: string; status?: string; key?: string }
@@ -48,4 +54,10 @@ export const creosApi = createApi({
   }),
 });
 
-export const { useGetCommentsQuery, useGetDoneIssuesQuery, useGetProjectsQuery, useGetDesignersQuery } = creosApi;
+export const {
+  useGetCommentsQuery,
+  useGetDoneIssuesQuery,
+  useGetProjectsQuery,
+  useGetDesignersQuery,
+  useGetIssuesQuery,
+} = creosApi;
