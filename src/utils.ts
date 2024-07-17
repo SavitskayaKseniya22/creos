@@ -1,7 +1,13 @@
-import { DateDetailedType, IssueDetailedExtendedType, IssueDetailedType, ParsedIssueArrayType } from "./types";
+import {
+  DateDetailedType,
+  IssueDetailedExtendedType,
+  IssueDetailedType,
+  ParsedIssueArrayType,
+  StatusPartType,
+} from "./types";
 
-export function getWeek(): number {
-  const currentDate = new Date();
+export function getWeekNumber(date: string | Date): number {
+  const currentDate = date instanceof Date ? date : new Date(date);
   const startOfYear = new Date(currentDate.getFullYear(), 0, 1);
   const dayDifference = (currentDate.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24);
   return Math.ceil((dayDifference * 24 - 11) / 24 / 7);
@@ -102,6 +108,7 @@ export function createDateString(date: DateDetailedType) {
 
   return `${d}${((d && h) || (d && m)) && ", "}${h}${h && m && ", "}${m}`;
 }
+
 export function getPersentageForStatus(data: IssueDetailedType[]): StatusPartType {
   const allTasks = data.length;
 
@@ -112,4 +119,21 @@ export function getPersentageForStatus(data: IssueDetailedType[]): StatusPartTyp
   const progressTasks = data.filter((item) => item.status === "In Progress").length;
 
   return { done: getP(doneTasks), new: getP(newTasks), progress: getP(progressTasks) };
+}
+
+export function getMonthValue(value: number) {
+  return [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ][value];
 }

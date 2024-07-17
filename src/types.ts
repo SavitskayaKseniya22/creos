@@ -61,6 +61,8 @@ export type IssueDetailedType = {
 
 export type IssueDetailedExtendedType = IssueDetailedType & { time_spent: number };
 
+export type IssueCRMExtendedType = IssueDetailedType & { weekNumber: number; outcome: number; profit: number };
+
 export interface ParsedIssueArrayType {
   name: string;
   tasks: IssueDetailedExtendedType[];
@@ -87,3 +89,11 @@ export interface StatusPartType {
   new: number;
   progress: number;
 }
+
+export type WeekData = {
+  weekNumber: number;
+  outcome: number;
+  profit: number;
+  income: number;
+  month: string;
+};

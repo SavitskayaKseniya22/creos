@@ -19,7 +19,7 @@ export const creosApi = createApi({
     getProjects: builder.query<ProjectType[], void>({
       query: () => `project/`,
     }),
-getIssues: builder.query<IssueDetailedType[], void>({
+    getIssues: builder.query<IssueDetailedType[], void>({
       query: () => ({
         url: `issue/`,
       }),
@@ -44,12 +44,12 @@ getIssues: builder.query<IssueDetailedType[], void>({
       }),
       transformResponse: (response: IssueDetailedType[]) => parseIssueArray(response),
     }),
-    getAllIssues: builder.query<ParsedIssueArrayType[], void>({
+
+    getAllDoneIssues: builder.query<IssueDetailedType[], void>({
       query: () => ({
         url: `issue/`,
         params: { status: "Done" },
       }),
-      transformResponse: (response: IssueDetailedType[]) => parseIssueArray(response),
     }),
   }),
 });
@@ -60,4 +60,5 @@ export const {
   useGetProjectsQuery,
   useGetDesignersQuery,
   useGetIssuesQuery,
+  useGetAllDoneIssuesQuery,
 } = creosApi;

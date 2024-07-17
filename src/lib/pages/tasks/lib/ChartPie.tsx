@@ -10,7 +10,6 @@ export default function ChartPie() {
 
   useEffect(() => {
     if (data) {
-      console.log(data);
       setPieData(getPersentageForStatus(data));
     }
   }, [data]);
@@ -20,19 +19,21 @@ export default function ChartPie() {
   }
 
   return (
-    <PieChart
-      series={[
-        {
-          data: [
-            { id: 0, value: pieData ? pieData.new : 0, label: "Размещено" },
-            { id: 1, value: pieData ? pieData.done : 0, label: "Закрыто" },
-            { id: 2, value: pieData ? pieData.progress : 0, label: "Взято в работу" },
-          ],
-          innerRadius: 32,
-        },
-      ]}
-      width={400}
-      height={200}
-    />
+    <div className="max-w-full overflow-x-scroll p-2">
+      <PieChart
+        series={[
+          {
+            data: [
+              { id: 0, value: pieData ? pieData.new : 0, label: "Размещено" },
+              { id: 1, value: pieData ? pieData.done : 0, label: "Закрыто" },
+              { id: 2, value: pieData ? pieData.progress : 0, label: "Взято в работу" },
+            ],
+            innerRadius: 32,
+          },
+        ]}
+        width={400}
+        height={200}
+      />
+    </div>
   );
 }
