@@ -5,6 +5,7 @@ import Projects from "./lib/Projects";
 import StatusControl from "./lib/StatusControl";
 import DesignerList from "./lib/DesignersList";
 import { useTranslation } from "react-i18next";
+import Spinner from "../../layout/lib/Spinner";
 
 export default function Designers() {
   const [pageNumber, setPageNumber] = useState(1);
@@ -34,6 +35,7 @@ export default function Designers() {
   return (
     <div className="flex w-full flex-col gap-8">
       <h2 className="text-xl font-bold">{t("titles.designers")}</h2>
+
       <div className="flex items-center gap-4">
         <button
           type="button"
@@ -88,6 +90,8 @@ export default function Designers() {
           }}
         ></StatusControl>
       </div>
+
+      {isLoading && <Spinner></Spinner>}
 
       {data && data.results.length > 0 && <DesignerList data={data.results}></DesignerList>}
       {data && !data.results.length && <p className="m-auto self-center">{t("emptysearch")}</p>}

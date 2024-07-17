@@ -5,10 +5,11 @@ import { WeekData } from "../../../../types";
 import WeekPicker from "./WeekPicker";
 import { getWeekNumber } from "../../../../utils";
 import { useTranslation } from "react-i18next";
+import Spinner from "../../../layout/lib/Spinner";
 
 export default function ChartBar() {
   const [weekAmount, setWeekAmount] = useState(8);
-  const { data, error } = useGetAllDoneIssuesQuery();
+  const { data, error, isLoading } = useGetAllDoneIssuesQuery();
   const [chartData, setChartData] = useState<null | WeekData[]>(null);
   const { t } = useTranslation();
 
@@ -45,39 +46,42 @@ export default function ChartBar() {
   }
 
   return (
-    chartData && (
-      <div className="max-w-full overflow-x-auto p-2">
-        <WeekPicker
-          onChange={(value) => {
-            setWeekAmount(+value);
-          }}
-        ></WeekPicker>
-        <BarChart
-          dataset={chartData}
-          xAxis={[
-            { id: "week", scaleType: "band", dataKey: "weekNumber" },
-            {
-              id: "month",
-              scaleType: "band",
-              dataKey: "month",
-              valueFormatter: (value) => t(`month.${value}`),
-            },
-          ]}
-          topAxis={"month"}
-          series={[
-            { dataKey: "income", label: t("money.income") },
-            { dataKey: "outcome", label: t("money.outcome") },
-            { dataKey: "profit", label: t("money.profit") },
-          ]}
-          width={800}
-          height={350}
-          slotProps={{
-            legend: {
-              padding: -5,
-            },
-          }}
-        />
-      </div>
-    )
+    <div className="flex max-w-full grow items-center justify-center overflow-x-auto p-2">
+      {isLoading && <Spinner></Spinner>}
+      {chartData && (
+        <>
+          <WeekPicker
+            onChange={(value) => {
+              setWeekAmount(+value);
+            }}
+          ></WeekPicker>
+          <BarChart
+            dataset={chartData}
+            xAxis={[
+              { id: "week", scaleType: "band", dataKey: "weekNumber" },
+              {
+                id: "month",
+                scaleType: "band",
+                dataKey: "month",
+                valueFormatter: (value) => t(`month.${value}`),
+              },
+            ]}
+            topAxis={"month"}
+            series={[
+              { dataKey: "income", label: t("money.income") },
+              { dataKey: "outcome", label: t("money.outcome") },
+              { dataKey: "profit", label: t("money.profit") },
+            ]}
+            width={800}
+            height={350}
+            slotProps={{
+              legend: {
+                padding: -5,
+              },
+            }}
+          />
+        </>
+      )}
+    </div>
   );
 }
