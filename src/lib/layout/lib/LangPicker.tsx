@@ -12,13 +12,14 @@ export default function LangPicker() {
         const langValue = formData.get("lang");
         if (langValue) {
           i18next.changeLanguage(langValue as string);
+          localStorage.setItem("lang", langValue as string);
         }
       }}
     >
       <select
         name="lang"
         className="block w-full rounded-md border border-gray-300 bg-gray-50 p-2 text-sm dark:border-gray-800 dark:bg-gray-800"
-        defaultValue="en"
+        defaultValue={localStorage.getItem("lang") || "en"}
       >
         <option value="en">English</option>
         <option value="ru">Русский</option>

@@ -1,8 +1,17 @@
-import { FormEvent } from "react";
+import { FormEvent, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 export default function ThemePicker() {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    const theme = localStorage.getItem("theme");
+    if (theme) {
+      document.body.classList.remove("light", "dark");
+      document.body.classList.add(theme);
+    }
+  }, []);
+
   return (
     <form
       className="w-20"
@@ -14,13 +23,14 @@ export default function ThemePicker() {
         if (themeValue) {
           document.body.classList.remove("light", "dark");
           document.body.classList.add(themeValue as string);
+          localStorage.setItem("theme", themeValue as string);
         }
       }}
     >
       <select
         name="theme"
         className="block w-full rounded-md border border-gray-300 bg-gray-50 p-2 text-sm dark:border-gray-800 dark:bg-gray-800"
-        defaultValue="Light"
+        defaultValue={localStorage.getItem("theme") || "light"}
       >
         <option value="light">{t("theme.light")}</option>
         <option value="dark">{t("theme.dark")}</option>
