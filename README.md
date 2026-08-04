@@ -1,5 +1,7 @@
-# [Creos app](https://courageous-longma-53287f.netlify.app/)
-Test assignment
+# [Creos app](https://test-creos-user-search.netlify.app/)
+Test assignment.
+
+Backend is no longer available.
 
 ## Features
 - [x] Mobile layout
